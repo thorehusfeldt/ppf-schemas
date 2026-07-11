@@ -1,0 +1,12 @@
+# grading must not be given unless type is scoring.
+problem_format_version: legacy
+name: Grading without scoring type
+grading:
+  objective: min
+---
+# objective must be "min" or "max".
+problem_format_version: legacy
+name: Invalid grading objective
+type: scoring
+grading:
+  objective: minimize

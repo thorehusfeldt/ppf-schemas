@@ -1,0 +1,3 @@
+# A problem package without problem_format_version is always legacy.
+# No uuid is required, because #Problem_legacy does not require one.
+name: Hello World!

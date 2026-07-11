@@ -1,0 +1,28 @@
+# All eight resource limits can be specified explicitly, in their respective units
+# (MiB for memory/output/compilation_memory/validation_memory/validation_output,
+# KiB for code, seconds for compilation_time/validation_time).
+name: All resource limits specified
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ab0
+limits:
+  memory: 2048
+  output: 8
+  code: 128
+  compilation_time: 60
+  compilation_memory: 2048
+  validation_time: 60
+  validation_memory: 2048
+  validation_output: 8
+---
+# Any subset can be specified; the rest are left to the system's discretion.
+name: Only memory specified
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ab1
+limits:
+  memory: 512
+---
+# No limits specified at all is also fine.
+name: No limits specified
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ab2
+limits: {}

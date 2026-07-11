@@ -1,0 +1,11 @@
+# Only languages from the languages table (or "all") are allowed.
+name: Unknown language
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ac9
+languages: [cpp, esperanto]
+---
+# languages must not be an empty list.
+name: Empty languages list
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789aca
+languages: []

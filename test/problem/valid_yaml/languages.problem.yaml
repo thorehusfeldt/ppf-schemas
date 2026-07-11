@@ -1,0 +1,11 @@
+# languages restricts which programming languages may be used to solve the problem.
+name: Restricted languages
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ac7
+languages: [cpp, python3]
+---
+# "all" (the default) allows any supported language; specifying it explicitly is also fine.
+name: All languages allowed, explicitly
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ac8
+languages: all

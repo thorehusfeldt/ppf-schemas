@@ -1,0 +1,5 @@
+# Absence of problem_format_version must resolve to #Problem_legacy specifically,
+# not just "either version" -- a 2025-09-only field (structured credits) should be
+# rejected, since #Problem_legacy has no `credits` key at all.
+credits:
+  authors: A. U. Thor

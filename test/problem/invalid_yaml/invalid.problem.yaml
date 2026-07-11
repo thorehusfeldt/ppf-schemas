@@ -198,6 +198,13 @@ credits:
   translators:
     en: 42
 ---
+# authors is mandatory within credits, once credits is given as a map.
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789abc
+name: Credits without authors
+credits:
+  contributors: Alice
+---
 # Source
 problem_format_version: 2025-09
 name: Source must have a name

@@ -1,0 +1,4 @@
+# source_url must not be given if source is not.
+problem_format_version: legacy
+name: source_url without source
+source_url: https://2005.nwerc.eu

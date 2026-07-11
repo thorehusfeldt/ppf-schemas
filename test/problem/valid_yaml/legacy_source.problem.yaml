@@ -1,0 +1,15 @@
+# The source field on a legacy problem is a plain string, unlike 2025-09's #Source object.
+problem_format_version: legacy
+name: Legacy source as plain string
+source: NWERC 2005
+---
+# source_url may accompany source.
+problem_format_version: legacy
+name: Legacy source with url
+source: NWERC 2005
+source_url: https://2005.nwerc.eu
+---
+# Absence of problem_format_version is legacy too, so it obeys the same source rules.
+name: Implicit legacy source
+source: NWERC 2005
+source_url: https://2005.nwerc.eu

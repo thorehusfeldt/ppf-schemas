@@ -1,0 +1,27 @@
+# A limit of zero is not allowed; limits must be strictly positive.
+name: Zero memory is not allowed
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ab3
+limits:
+  memory: 0
+---
+# Negative limits are not allowed.
+name: Negative code limit is not allowed
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ab4
+limits:
+  code: -128
+---
+# Resource limits must be integers, not floats.
+name: Compilation time must be an integer
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ab5
+limits:
+  compilation_time: 60.5
+---
+# Unknown limit keys are rejected.
+name: Unknown resource limit key
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ab6
+limits:
+  network_time: 5

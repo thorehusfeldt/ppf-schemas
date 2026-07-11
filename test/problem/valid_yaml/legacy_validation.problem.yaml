@@ -1,0 +1,19 @@
+# validation and validator_flags on a legacy problem.
+problem_format_version: legacy
+name: Custom validation
+validation: custom score
+validator_flags: --tolerance 1e-6
+---
+# grading is only valid alongside type: scoring.
+problem_format_version: legacy
+name: Scoring problem with grading
+type: scoring
+grading:
+  objective: min
+  show_test_data_groups: true
+---
+# grading's keys are all optional; defaults apply.
+problem_format_version: legacy
+name: Scoring problem, default grading
+type: scoring
+grading: {}
