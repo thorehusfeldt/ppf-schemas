@@ -4,3 +4,21 @@ accepted:
 mumbo:
   permitted: [AC, TLE]
   required: [TLE]
+---
+# score can be a plain integer.
+partial:
+  score: 10
+---
+# score can be a float, whole-numbered or fractional.
+partial:
+  score: 10.0
+---
+partial:
+  score: 10.5
+---
+# score can be an ascending [min, max] range, mixing int and float.
+partial:
+  score: [0, 100]
+---
+partial:
+  score: [0, 100.5]

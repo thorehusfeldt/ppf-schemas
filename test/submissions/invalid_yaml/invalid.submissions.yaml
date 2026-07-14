@@ -13,3 +13,11 @@
 # invalid verdict
 accepted:
   required: [MLE]
+---
+# score range must be ascending.
+partial:
+  score: [100, 0]
+---
+# score must be a number, not a string.
+partial:
+  score: "10"
