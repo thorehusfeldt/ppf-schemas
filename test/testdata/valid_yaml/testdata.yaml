@@ -1,0 +1,38 @@
+on_reject: break
+---
+on_reject: continue
+---
+grading: custom
+---
+grader_flags: --tolerance 1e-6
+---
+# input_validator_flags as a plain string (arguments for each input validator).
+input_validator_flags: --strict
+---
+# input_validator_flags as a map with name and flags.
+input_validator_flags:
+  name: my_validator
+  flags: --strict
+---
+# output_validator_flags as a plain string (the name of the validator to use).
+output_validator_flags: my_validator
+---
+# output_validator_flags as a map with name and flags.
+output_validator_flags:
+  name: my_validator
+  flags: --tolerance 1e-6
+---
+accept_score: 1
+---
+accept_score: 0.5
+---
+reject_score: 0
+---
+range: -inf +inf
+---
+range: 0 100
+---
+range: -10.5 +10.5
+---
+# All keys are optional; an empty file (defaults apply) is fine.
+{}

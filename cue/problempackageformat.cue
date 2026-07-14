@@ -44,6 +44,8 @@ let name_regex = "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 	description?: string
 }
 
+// Configuration for test_group.yaml (2025-09 format only -- legacy uses testdata.yaml,
+// #testdata_configuration, with an unrelated set of keys).
 #test_group_configuration: {
 	#test_case_or_group_configuration...
 	max_score?:               int & >=0 | "unbounded"
@@ -54,4 +56,46 @@ let name_regex = "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 	}
 	require_pass?: "sample" | #test_data_group | [...("sample" | #test_data_group)]
 
+}
+
+let inf_or_number = "([-+]?[0-9]+(\\.[0-9]+)?|-inf|\\+inf|inf)"
+
+// Configuration for testdata.yaml (legacy format only -- 2025-09 uses test_group.yaml,
+// #test_group_configuration, with an unrelated set of keys, plus a separate per-testcase
+// #test_case_configuration file that legacy has no equivalent of). May be placed in any test
+// data group; properties are inherited transitively by descendant groups that don't override
+// them.
+#testdata_configuration: {
+	// How judging proceeds after a non-Accept judgement on an individual test case or subgroup.
+	// "break": proceed immediately to grading. "continue": keep judging the rest of the group.
+	on_reject?: *"break" | "continue"
+
+	grading?: *"default" | "custom"
+
+	// Arguments passed to the grader for this test data group.
+	grader_flags?: *"" | string
+
+	// Arguments passed to the input validator for this test data group. If a string, those are
+	// the arguments passed to each input validator. If a map, name is the input validator to use
+	// and flags are its arguments. (The spec's prose also describes this map as if it could be
+	// dynamically keyed by validator name, with "validators not present in the map run without
+	// arguments" -- that's inconsistent with its own type column, "map with the keys name and
+	// flags", which is what's encoded here.)
+	input_validator_flags?: *"" | string | {name?: string, flags?: string}
+
+	// Arguments passed to the output validator for this test data group. If a string, this is
+	// the name of the output validator to use (not its arguments -- asymmetric with
+	// input_validator_flags, but that's what the spec states). If a map, name is the output
+	// validator to use and flags are its arguments.
+	output_validator_flags?: *"" | string | {name?: string, flags?: string}
+
+	// Default score for accepted input files. Only for scoring problems.
+	accept_score?: *1 | number
+
+	// Default score for rejected input files. Only for scoring problems.
+	reject_score?: *0 | number
+
+	// The range of possible scores: two space-separated numbers A and B, where "inf", "-inf",
+	// and "+inf" are allowed for infinity. Only for scoring problems.
+	range?: *"-inf +inf" | =~"^\(inf_or_number) \(inf_or_number)$"
 }

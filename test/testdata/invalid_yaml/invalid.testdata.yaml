@@ -1,0 +1,17 @@
+# on_reject must be "break" or "continue".
+on_reject: skip
+---
+# grading must be "default" or "custom".
+grading: custom-scoring
+---
+# accept_score must be a number.
+accept_score: "high"
+---
+# range must be a string of two space-separated numbers, not a YAML list.
+range: [0, 100]
+---
+# range must have exactly two tokens.
+range: "0"
+---
+# Unknown keys are rejected.
+foo: bar

@@ -7,8 +7,8 @@ cd "$(dirname "$0")"
 # Configuration
 # ----------------------------
 
-all_valid_yaml=(problem/valid_yaml test_group/valid_yaml submissions/valid_yaml)
-all_invalid_yaml=(problem/invalid_yaml test_group/invalid_yaml submissions/invalid_yaml)
+all_valid_yaml=(problem/valid_yaml test_group/valid_yaml submissions/valid_yaml testdata/valid_yaml)
+all_invalid_yaml=(problem/invalid_yaml test_group/invalid_yaml submissions/invalid_yaml testdata/invalid_yaml)
 schemadir="../cue"
 
 # Temp directory for snippets
@@ -39,6 +39,7 @@ ignored=0
 declare -A schema_map=(
 ["*problem.yaml"]="#Problem"
 ["*test_group.yaml"]="#test_group_configuration"
+["*testdata.yaml"]="#testdata_configuration"
 ["*/data/**/*.yaml"]="#test_case_configuration"
 ["*submissions.yaml"]="#Submissions"
 # add more schemas here
