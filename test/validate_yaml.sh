@@ -150,6 +150,51 @@ for dir in "${all_invalid_yaml[@]}"; do
 	done < <(find "$dir" -type f -name '*.yaml')
 done
 
+# ------------------------------------------------------
+# Direct value checks for low-level, unwrapped defs that
+# have no YAML file of their own to validate as a whole
+# ------------------------------------------------------
+check_value() {
+	local def=$1 value=$2 expect_failure=$3
+	local snippet="$SNIPPETS_DIR/value.yaml"
+	printf '%s\n' "$value" > "$snippet"
+	run_cue_vet "$snippet" "$def" "" "$expect_failure"
+}
+
+# #name
+check_value '#name' 'huge' 0
+check_value '#name' 'make_tree' 0
+check_value '#name' '"3"' 0
+check_value '#name' 'a' 0
+check_value '#name' 'connected_graph-01' 0
+check_value '#name' '-2' 1
+check_value '#name' '.2' 1
+check_value '#name' '..' 1
+check_value '#name' '""' 1
+
+# #path
+check_value '#path' 'data/secret/huge' 0
+check_value '#path' 'submissions/accepted/x.cpp' 0
+check_value '#path' '/data/secret/huge' 1
+check_value '#path' 'data//secret' 1
+check_value '#path' 'data/secret/' 1
+
+# #package_dirname
+check_value '#package_dirname' 'hello123' 0
+check_value '#package_dirname' 'a' 0
+check_value '#package_dirname' '"0"' 0
+check_value '#package_dirname' 'Hello' 1
+check_value '#package_dirname' 'hello_world' 1
+check_value '#package_dirname' 'hello-world' 1
+check_value '#package_dirname' 'hello.world' 1
+
+# #test_data_group
+check_value '#test_data_group' 'secret/group1' 0
+check_value '#test_data_group' 'secret/group1/sub' 0
+check_value '#test_data_group' 'sample/group1' 1
+check_value '#test_data_group' 'secret' 1
+check_value '#test_data_group' 'public/secret/x' 1
+
 # -------
 # Summary
 # -------

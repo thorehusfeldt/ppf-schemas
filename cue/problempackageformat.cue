@@ -10,15 +10,20 @@ let name_regex = "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 
 #name: =~"^\(name_regex)$"
 
+// The top-level directory name of a problem package (or its .zip's base name) -- more
+// restrictive than #name: lowercase letters and digits only. Shared between both format
+// versions; unlike most naming rules, this one was never forked.
+#package_dirname: #name & =~"^[a-z0-9]+$"
+
 // Paths are separated by /, always relative to the package root -- the spec has no notion of
 // an absolute path. Paths can refer to objects like the test group "data/secret/huge" or
 // a program file like "submissions/accepted/x.cpp".
 #path: =~"^(\(name_regex)/)*\(name_regex)$"
 
-// A test data group is a subdivision of `secret`
-
-
-#test_data_group: =~"secret/\(name_regex)$"
+// A named subdivision of `secret`, nested to any depth, such as "secret/group1" or
+// "secret/group1/sub". Never bare "secret" itself -- secret may only depend on sample
+// (via the separate "sample" literal in require_pass below), never on itself.
+#test_data_group: =~"^secret(/\(name_regex))+$"
 
 #ProgrammingLanguage: "ada" | "algol68" | "apl" | "bash" | "c" | "cgmp" | "cobol" | "cpp" | "cppgmp" | "crystal" | "csharp" | "d" | "dart" | "elixir" | "erlang" | "forth" | "fortran" | "fsharp" | "gerbil" | "go" | "haskell" | "java" | "javaalgs4" | "javascript" | "julia" | "kotlin" | "lisp" | "lua" | "modula2" | "nim" | "objectivec" | "ocaml" | "octave" | "odin" | "pascal" | "perl" | "php" | "prolog" | "python2" | "python3" | "python3numpy" | "racket" | "ruby" | "rust" | "scala" | "simula" | "smalltalk" | "snobol" | "swift" | "typescript" | "visualbasic" | "zig"
 #LanguageCode:        =~"^[a-z]{2,3}(-[A-Z]{2})?$"

@@ -22,6 +22,9 @@ static_validation_score: pass-fail
 ---
 require_pass: secret/small
 ---
+# Test data groups can be nested to any depth.
+require_pass: secret/a/b
+---
 require_pass: []
 ---
 require_pass: [secret/small, secret/huge]
