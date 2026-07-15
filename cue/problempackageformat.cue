@@ -10,13 +10,10 @@ let name_regex = "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 
 #name: =~"^\(name_regex)$"
 
-// Paths are separated by /,  they may start with (but not end with) /.
-// Paths can both refer to objects like the test group "data/secret/huge" or
-// a program file like "/submissions/accepted/x.cpp"
-#path: =~"^/?(\(name_regex)/)*\(name_regex)$"
-
-#absolute_path: #path & =~"^/"
-#relative_path: #path & !~"^/"
+// Paths are separated by /, always relative to the package root -- the spec has no notion of
+// an absolute path. Paths can refer to objects like the test group "data/secret/huge" or
+// a program file like "submissions/accepted/x.cpp".
+#path: =~"^(\(name_regex)/)*\(name_regex)$"
 
 // A test data group is a subdivision of `secret`
 
