@@ -4,6 +4,8 @@ CUE schemas for the ICPC/Kattis [problem package format](https://icpc.io/problem
 
 This module does **not** cover BAPCtools' generators framework (`generators.yaml`); that stays BAPCtools-internal and will eventually import from here.
 
+**Registry page:** [registry.cue.works/docs/github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.4](https://registry.cue.works/docs/github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.4)
+
 ## Layout
 
 - `cue/` — the CUE module (`github.com/thorehusfeldt/ppf-schemas/problempackageformat`), published to the [CUE Central Registry](https://registry.cue.works/)
@@ -28,16 +30,16 @@ directory, nothing written locally; `cue` resolves and caches the module from th
 fly.
 
 ```bash
-cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 problem.yaml
+cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.4 problem.yaml
 ```
 
 If you're integrating this into a real project rather than doing a one-off check, the more usual
 module-dependency workflow also works — `cue mod init your-module`, then
-`cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2` once, after which
-you can drop the `@v0.1.2` from the `cue vet` invocation and it resolves from the recorded
+`cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.4` once, after which
+you can drop the `@v0.1.4` from the `cue vet` invocation and it resolves from the recorded
 dependency instead.
 
-All four examples below were run for real against the published `v0.1.2` module.
+All four examples below were run for real against the published `v0.1.4` module.
 
 ### Valid: 2025-09, using several optional features at once
 
@@ -62,7 +64,7 @@ limits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 pos_2025-09.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.4 pos_2025-09.yaml
 $
 ```
 No output, exit `0` — `cue vet`'s way of saying everything's fine. Note there's no `rights_owner`:
@@ -87,7 +89,7 @@ limits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 pos_legacy.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.4 pos_legacy.yaml
 $
 ```
 No `problem_format_version` key at all — a real legacy problem never has one. Also no `rights_owner`
@@ -102,14 +104,19 @@ credits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 neg_implicit_legacy.yaml
-credits: field not allowed:
-    ./neg_implicit_legacy.yaml:2:1
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.4 neg_implicit_legacy.yaml
+problem_format_version: field is required but not present:
+    .../problem.cue:81:2
+uuid: field is required but not present:
+    .../problem.cue:84:2
 ```
 
-`credits` is a 2025-09-only field (legacy has `author`, a plain string, instead) — and since
-`problem_format_version` is absent here, this is unambiguously a legacy problem, which flatly doesn't
-have a `credits` key to allow.
+This looks backwards at first — `problem_format_version` is optional, so why does removing it make it
+*required*? Because `credits` isn't a legacy field (legacy only has `author`, a plain string), the
+legacy branch this would otherwise resolve to is a genuine conflict, not just incomplete, and gets
+eliminated from the disjunction entirely. That leaves only the 2025-09 branch as the surviving
+explanation of what your document would need to be valid — which is exactly `problem_format_version`
+and `uuid`.
 
 ### Invalid, instructively: a license that isn't `unknown`/`public domain` needs an attribution path
 
@@ -121,7 +128,7 @@ license: cc0
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 neg_missing_rights_owner.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.4 neg_missing_rights_owner.yaml
 rights_owner: field is required but not present
 ```
 
