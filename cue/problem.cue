@@ -79,10 +79,13 @@ import uuidpkg "uuid"
 #Problem: {
 	// The version of the problem format package used for this problem.
 	// Absence means legacy: a problem package without this key is always legacy.
-	// (Enforced by #Problem_2025_09 requiring it and #Problem_legacy not requiring it.)
-	problem_format_version?: "2025-09" | "legacy"
-
-	#Problem_2025_09... | *#Problem_legacy...
+	problem_format_version: *"legacy" | "2025-09"
+	if problem_format_version == "2025-09" {
+		#Problem_2025_09...
+	}
+	if problem_format_version != "2025-09" {
+		#Problem_legacy...
+	}
 }
 
 #Problem_2025_09: {
