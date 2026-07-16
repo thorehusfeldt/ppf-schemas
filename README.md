@@ -22,13 +22,20 @@ qualifier.
 
 ## Examples
 
-After the one-time setup (`cue mod init your-module; cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1`),
-you can `cue vet` a `problem.yaml` in one line — no local `.cue` file needed. Pass the module's
-import path as an instance argument, the same way you'd pass a local schema directory:
+The quickest way to check a `problem.yaml`: put the version directly on the module path in the
+`cue vet` invocation itself. This needs **no setup at all** — no `cue mod init`, no `cue.mod/`
+directory, nothing written locally; `cue` resolves and caches the module from the registry on the
+fly.
 
 ```bash
-cue vet github.com/thorehusfeldt/ppf-schemas/problempackageformat problem.yaml --schema '#Problem'
+cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 problem.yaml
 ```
+
+If you're integrating this into a real project rather than doing a one-off check, the more usual
+module-dependency workflow also works — `cue mod init your-module`, then
+`cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1` once, after which
+you can drop the `@v0.1.1` from the `cue vet` invocation and it resolves from the recorded
+dependency instead.
 
 All four examples below were run for real against the published `v0.1.1` module.
 
@@ -55,7 +62,7 @@ limits:
 ```
 
 ```
-$ cue vet github.com/thorehusfeldt/ppf-schemas/problempackageformat pos_2025-09.yaml --schema '#Problem'
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 pos_2025-09.yaml
 $
 ```
 No output, exit `0` — `cue vet`'s way of saying everything's fine. Note there's no `rights_owner`:
@@ -80,7 +87,7 @@ limits:
 ```
 
 ```
-$ cue vet github.com/thorehusfeldt/ppf-schemas/problempackageformat pos_legacy.yaml --schema '#Problem'
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 pos_legacy.yaml
 $
 ```
 No `problem_format_version` key at all — a real legacy problem never has one. Also no `rights_owner`
@@ -95,7 +102,7 @@ credits:
 ```
 
 ```
-$ cue vet github.com/thorehusfeldt/ppf-schemas/problempackageformat neg_implicit_legacy.yaml --schema '#Problem'
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 neg_implicit_legacy.yaml
 credits: field not allowed:
     ./neg_implicit_legacy.yaml:2:1
 ```
@@ -114,7 +121,7 @@ license: cc0
 ```
 
 ```
-$ cue vet github.com/thorehusfeldt/ppf-schemas/problempackageformat neg_missing_rights_owner.yaml --schema '#Problem'
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 neg_missing_rights_owner.yaml
 rights_owner: field is required but not present
 ```
 
