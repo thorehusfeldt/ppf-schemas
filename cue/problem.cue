@@ -76,17 +76,8 @@ import uuidpkg "uuid"
 	validation_output?: int & >0
 }
 
-#Problem: {
-	// The version of the problem format package used for this problem.
-	// Absence means legacy: a problem package without this key is always legacy.
-	problem_format_version: *"legacy" | "2025-09"
-	if problem_format_version == "2025-09" {
-		#Problem_2025_09...
-	}
-	if problem_format_version != "2025-09" {
-		#Problem_legacy...
-	}
-}
+// The version of the problem format package used for this problem. Absence means legacy.
+#Problem: *#Problem_legacy | #Problem_2025_09
 
 #Problem_2025_09: {
 	problem_format_version!: "2025-09"
