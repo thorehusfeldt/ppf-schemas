@@ -22,7 +22,7 @@ qualifier.
 
 ## Examples
 
-After the one-time setup (`cue mod init your-module; cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.0`),
+After the one-time setup (`cue mod init your-module; cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1`),
 you can `cue vet` a `problem.yaml` in one line — no local `.cue` file needed. Pass the module's
 import path as an instance argument, the same way you'd pass a local schema directory:
 
@@ -30,7 +30,7 @@ import path as an instance argument, the same way you'd pass a local schema dire
 cue vet github.com/thorehusfeldt/ppf-schemas/problempackageformat problem.yaml --schema '#Problem'
 ```
 
-All four examples below were run for real against the published `v0.1.0` module.
+All four examples below were run for real against the published `v0.1.1` module.
 
 ### Valid: 2025-09, using several optional features at once
 
@@ -96,18 +96,13 @@ credits:
 
 ```
 $ cue vet github.com/thorehusfeldt/ppf-schemas/problempackageformat neg_implicit_legacy.yaml --schema '#Problem'
-problem_format_version: field is required but not present:
-    .../problem.cue:89:2
-uuid: field is required but not present:
-    .../problem.cue:92:2
+credits: field not allowed:
+    ./neg_implicit_legacy.yaml:2:1
 ```
 
-This looks backwards at first — `problem_format_version` is optional, so why does removing it make it
-*required*? Because `credits` isn't a legacy field (legacy only has `author`, a plain string), so the
-legacy branch this would otherwise default to is a genuine conflict, not just incomplete, and gets
-eliminated from consideration entirely. That leaves only the 2025-09 branch as the surviving
-explanation of what your document would need to be valid — which is exactly `problem_format_version`
-and `uuid`.
+`credits` is a 2025-09-only field (legacy has `author`, a plain string, instead) — and since
+`problem_format_version` is absent here, this is unambiguously a legacy problem, which flatly doesn't
+have a `credits` key to allow.
 
 ### Invalid, instructively: a license that isn't `unknown`/`public domain` needs an attribution path
 
