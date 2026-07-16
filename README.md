@@ -28,16 +28,16 @@ directory, nothing written locally; `cue` resolves and caches the module from th
 fly.
 
 ```bash
-cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 problem.yaml
+cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 problem.yaml
 ```
 
 If you're integrating this into a real project rather than doing a one-off check, the more usual
 module-dependency workflow also works — `cue mod init your-module`, then
-`cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1` once, after which
-you can drop the `@v0.1.1` from the `cue vet` invocation and it resolves from the recorded
+`cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2` once, after which
+you can drop the `@v0.1.2` from the `cue vet` invocation and it resolves from the recorded
 dependency instead.
 
-All four examples below were run for real against the published `v0.1.1` module.
+All four examples below were run for real against the published `v0.1.2` module.
 
 ### Valid: 2025-09, using several optional features at once
 
@@ -62,7 +62,7 @@ limits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 pos_2025-09.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 pos_2025-09.yaml
 $
 ```
 No output, exit `0` — `cue vet`'s way of saying everything's fine. Note there's no `rights_owner`:
@@ -87,7 +87,7 @@ limits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 pos_legacy.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 pos_legacy.yaml
 $
 ```
 No `problem_format_version` key at all — a real legacy problem never has one. Also no `rights_owner`
@@ -102,7 +102,7 @@ credits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 neg_implicit_legacy.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 neg_implicit_legacy.yaml
 credits: field not allowed:
     ./neg_implicit_legacy.yaml:2:1
 ```
@@ -121,7 +121,7 @@ license: cc0
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.1 neg_missing_rights_owner.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.2 neg_missing_rights_owner.yaml
 rights_owner: field is required but not present
 ```
 
