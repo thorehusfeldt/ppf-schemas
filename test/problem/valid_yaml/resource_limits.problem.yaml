@@ -26,3 +26,25 @@ name: No limits specified
 problem_format_version: 2025-09
 uuid: 12345678-1234-1234-1234-123456789ab2
 limits: {}
+---
+# Regression test: time_limit (a 2025-09-only limits field, not part of #ResourceLimits) combined
+# with several other 2025-09-only top-level fields at once. This exact combination once triggered
+# a real bug in #Problem's discriminator (the shared #ResourceLimits embed interacting with
+# disjunction-branch closedness caused legitimate 2025-09 documents to be rejected).
+name:
+  en: Hello World!
+  da: Hej verden!
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ab7
+type: [scoring, interactive]
+credits:
+  authors: Ada Lovelace <ada@example.com>
+  testers:
+    - Alan Turing
+license: cc by-sa
+source:
+  name: NWERC 2024
+  url: https://2024.nwerc.example/contest
+limits:
+  time_limit: 2.5
+  memory: 1024

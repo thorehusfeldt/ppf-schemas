@@ -1,5 +1,3 @@
-@experiment(explicitopen)
-
 package problempackageformat
 
 // Directory and file names, as well as names of test cases are
@@ -41,7 +39,7 @@ let name_regex = "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 }
 
 #test_case_configuration: {
-	#test_case_or_group_configuration...
+	#test_case_or_group_configuration
 	hint?:        string
 	description?: string
 }
@@ -49,7 +47,7 @@ let name_regex = "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 // Configuration for test_group.yaml (2025-09 format only -- legacy uses testdata.yaml,
 // #testdata_configuration, with an unrelated set of keys).
 #test_group_configuration: {
-	#test_case_or_group_configuration...
+	#test_case_or_group_configuration
 	max_score?:               int & >=0 | "unbounded"
 	score_aggregation?:       "pass-fail" | "sum" | "min"
 	static_validation_score?: int & >=0 | "pass-fail"

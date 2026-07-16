@@ -1,5 +1,3 @@
-@experiment(explicitopen)
-
 package problempackageformat
 
 import "list"
