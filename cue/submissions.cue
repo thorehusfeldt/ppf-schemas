@@ -15,13 +15,6 @@ let glob_path = =~"^(\(component_re)/)*\(component_re)$" & !~"\\*\\*"
 	[glob_path]: #submission
 }
 
-#SubmissionsJson: {
-    [string]: {
-        #submission
-        [string]: #expectation
-    }
-}
-
 #submission: {
 	// As determined by file endings given in the language list, if not given.
 	language?: string
