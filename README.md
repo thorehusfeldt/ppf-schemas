@@ -152,3 +152,15 @@ needing `rights_owner` explicitly.
 cd test
 ./validate_yaml.sh       # -v for verbose, -e to fail fast, -s to silence "no schema" skips
 ```
+
+## Development setup
+
+One-time, per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+This enables a pre-commit hook (`.githooks/pre-commit`) that runs `cue fmt --check` and the full
+test suite before each commit. Both are fast (formatting check is instant, the test suite is
+~10 seconds) and silent on success.

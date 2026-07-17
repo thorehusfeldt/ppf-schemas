@@ -7,7 +7,7 @@ import "list"
 // Regular expressions for glob-like path matching
 let letter = "[a-zA-Z0-9_.*-]"
 let word_re = "[a-zA-Z0-9_. -]*"
-let brace_atom_re  = "\\{\(word_re)(,\(word_re))*\\}"
+let brace_atom_re = "\\{\(word_re)(,\(word_re))*\\}"
 let component_re = "(\(letter)|\(brace_atom_re))+"
 let glob_path = =~"^(\(component_re)/)*\(component_re)$" & !~"\\*\\*"
 
