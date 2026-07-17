@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "==> cue fmt --check"
+if ! (cd cue && cue fmt --check --files .); then
+	echo "cue fmt found unformatted files -- run: (cd cue && cue fmt --files .)" >&2
+	exit 1
+fi
+
+echo "==> test suite"
+if ! output=$(cd test && ./validate_yaml.sh -s 2>&1); then
+	echo "$output"
+	exit 1
+fi
+echo "$output" | tail -6

@@ -138,7 +138,6 @@ import uuidpkg "uuid"
 		}
 	}
 
-
 	// The source(s) of this problem, such as `Northwestern Europe Regional Contest (NWERC) 2005`.
 	// Multiple sources can be given as a list, mixing string and map form freely.
 	source?: #Source | [#Source, ...#Source]
@@ -157,7 +156,6 @@ import uuidpkg "uuid"
 			validation_passes?: int & >=2 | *2
 		}
 	}
-
 
 	// The problem package should not be publicly available until this date (or date-time, in UTC).
 	// If only a date is given, the time defaults to the start of that day in UTC.
