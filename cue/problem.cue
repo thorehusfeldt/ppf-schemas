@@ -74,10 +74,10 @@ import uuidpkg "uuid"
 	validation_output?: int & >0
 }
 
-// The version of the problem format package used for this problem. Absence means legacy.
 #Problem: *#Problem_legacy | #Problem_2025_09
 
 #Problem_2025_09: {
+	// The version of the problem format package used for this problem.
 	problem_format_version!: "2025-09"
 
 	// A universally unique identifier for this problem, such as `acde070d-8c4c-4f0d-9d8a-162843c10333`.
@@ -183,6 +183,8 @@ import uuidpkg "uuid"
 }
 
 #Problem_legacy: {
+	// The version of the problem format package used for this problem. Absence means legacy:
+	// a problem package without this key is always legacy.
 	problem_format_version?: "legacy"
 
 	// A universally unique identifier for this problem, such as `acde070d-8c4c-4f0d-9d8a-162843c10333`.
