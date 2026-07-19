@@ -146,6 +146,10 @@ needing `rights_owner` explicitly.
 | `testdata.yaml` | `#testdata_configuration` (legacy) |
 | `data/**/*.yaml` (per-testcase config) | `#test_case_configuration` |
 
+Building blocks used across the above, also available to import directly: `#name`, `#package_dirname`,
+`#path` (rooted or not), `#relative_path`/`#absolute_path` (specialize `#path` to one or the other),
+`#test_data_group`.
+
 ## Testing
 
 ```bash

@@ -172,12 +172,22 @@ check_value '#name' '.2' 1
 check_value '#name' '..' 1
 check_value '#name' '""' 1
 
-# #path
+# #path (general grammar: rooted or not)
 check_value '#path' 'data/secret/huge' 0
 check_value '#path' 'submissions/accepted/x.cpp' 0
-check_value '#path' '/data/secret/huge' 1
+check_value '#path' '/data/secret/huge' 0
 check_value '#path' 'data//secret' 1
 check_value '#path' 'data/secret/' 1
+
+# #relative_path (specializes #path: never rooted)
+check_value '#relative_path' 'data/secret/huge' 0
+check_value '#relative_path' 'submissions/accepted/x.cpp' 0
+check_value '#relative_path' '/data/secret/huge' 1
+
+# #absolute_path (specializes #path: always rooted)
+check_value '#absolute_path' '/data/secret/huge' 0
+check_value '#absolute_path' '/submissions/accepted/x.cpp' 0
+check_value '#absolute_path' 'data/secret/huge' 1
 
 # #package_dirname
 check_value '#package_dirname' 'hello123' 0
