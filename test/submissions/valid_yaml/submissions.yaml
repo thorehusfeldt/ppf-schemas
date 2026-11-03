@@ -22,3 +22,6 @@ partial:
 ---
 partial:
   score: [0, 100.5]
+---
+wa/hello.py:
+  judge_message: hello

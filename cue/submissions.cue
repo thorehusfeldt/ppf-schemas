@@ -44,7 +44,7 @@ let glob_path = =~"^(\(component_re)/)*\(component_re)$" & !~"\\*\\*"
 	score?: number | [number, number] & list.IsSorted(list.Ascending)
 
 	// Must appear as a substring in at least one judgemessage.txt.
-	message?: *"" | string
+	judge_message?: *"" | string
 
 	// Opt this (set of) submission(s) out of (false) or into (lower/upper) determining the time
 	// limit. lower is equivalent to permitted: [AC, WA, RTE]; upper is equivalent to required: [TLE].

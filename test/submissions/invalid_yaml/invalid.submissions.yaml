@@ -21,3 +21,7 @@ partial:
 # score must be a number, not a string.
 partial:
   score: "10"
+---
+# message is not a field (it is judge_message).
+wa/hello.py:
+  message: hello
