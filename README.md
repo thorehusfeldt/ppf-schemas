@@ -1,6 +1,6 @@
 # ppf-schemas
 
-CUE schemas for the ICPC/Kattis [problem package format](https://icpc.io/problem-package-format/spec/2025-09.html) (ppf) — `problem.yaml`, `submissions.yaml`, and per-testcase/test-group configuration.
+CUE schemas for the ICPC/Kattis [problem package format](https://www.kattis.com/problem-package-format/spec/2025-09.html) (ppf) — `problem.yaml`, `submissions.yaml`, and per-testcase/test-group configuration.
 
 This module does **not** cover BAPCtools' generators framework (`generators.yaml`); that stays BAPCtools-internal and will eventually import from here.
 
