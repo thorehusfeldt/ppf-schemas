@@ -36,20 +36,22 @@ ignored=0
 # Dispatcher
 # ----------
 
-declare -A schema_map=(
-["*problem.yaml"]="#Problem"
-["*test_group.yaml"]="#test_group_configuration"
-["*testdata.yaml"]="#testdata_configuration"
-["*/data/**/*.yaml"]="#test_case_configuration"
-["*submissions.yaml"]="#Submissions"
+# Ordered "glob|schema" pairs; the first matching glob wins. (A plain array rather than
+# declare -A, which macOS's bash 3.2 does not have.)
+schema_map=(
+"*problem.yaml|#Problem"
+"*test_group.yaml|#test_group_configuration"
+"*testdata.yaml|#testdata_configuration"
+"*/data/**/*.yaml|#test_case_configuration"
+"*submissions.yaml|#Submissions"
 # add more schemas here
 )
 
 schema_for_file() {
 	local file=$1
-	for pattern in "${!schema_map[@]}"; do
-		if [[ $file == $pattern ]]; then
-			echo "${schema_map[$pattern]}"
+	for entry in "${schema_map[@]}"; do
+		if [[ $file == ${entry%%|*} ]]; then
+			echo "${entry#*|}"
 			return 0
 		fi
 	done
