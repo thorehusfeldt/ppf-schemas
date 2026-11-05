@@ -4,7 +4,7 @@ CUE schemas for the ICPC/Kattis [problem package format](https://www.kattis.com/
 
 This module does **not** cover BAPCtools' generators framework (`generators.yaml`); that stays BAPCtools-internal and will eventually import from here.
 
-**Registry page:** [registry.cue.works/docs/github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.6](https://registry.cue.works/docs/github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.6)
+**Registry page:** [registry.cue.works/docs/github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.7](https://registry.cue.works/docs/github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.7)
 
 ## Layout
 
@@ -30,13 +30,13 @@ directory, nothing written locally; `cue` resolves and caches the module from th
 fly.
 
 ```bash
-cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.6 problem.yaml
+cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.7 problem.yaml
 ```
 
 If you're integrating this into a real project rather than doing a one-off check, the more usual
 module-dependency workflow also works — `cue mod init your-module`, then
-`cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.6` once, after which
-you can drop the `@v0.1.6` from the `cue vet` invocation and it resolves from the recorded
+`cue mod get github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.7` once, after which
+you can drop the `@v0.1.7` from the `cue vet` invocation and it resolves from the recorded
 dependency instead.
 
 ### Valid: 2025-09, using several optional features at once
@@ -62,7 +62,7 @@ limits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.6 pos_2025-09.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.7 pos_2025-09.yaml
 $
 ```
 No output, exit `0` — `cue vet`'s way of saying everything's fine. Note there's no `rights_owner`:
@@ -87,7 +87,7 @@ limits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.6 pos_legacy.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.7 pos_legacy.yaml
 $
 ```
 No `problem_format_version` key at all — a real legacy problem never has one. Also no `rights_owner`
@@ -102,11 +102,11 @@ credits:
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.6 neg_implicit_legacy.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.7 neg_implicit_legacy.yaml
 problem_format_version: field is required but not present:
-    .../problem.cue:81:2
+    .../problem.cue:82:2
 uuid: field is required but not present:
-    .../problem.cue:84:2
+    .../problem.cue:85:2
 ```
 
 This looks backwards at first — `problem_format_version` is optional, so why does removing it make it
@@ -126,7 +126,7 @@ license: cc0
 ```
 
 ```
-$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.6 neg_missing_rights_owner.yaml
+$ cue vet --schema '#Problem' github.com/thorehusfeldt/ppf-schemas/problempackageformat@v0.1.7 neg_missing_rights_owner.yaml
 rights_owner: field is required but not present
 ```
 

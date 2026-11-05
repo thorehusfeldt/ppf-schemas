@@ -9,3 +9,12 @@ name: All languages allowed, explicitly
 problem_format_version: 2025-09
 uuid: 12345678-1234-1234-1234-123456789ac8
 languages: all
+---
+# Legacy problems may restrict languages too.
+problem_format_version: legacy
+name: Legacy restricted languages
+languages: [cpp, python3]
+---
+problem_format_version: legacy
+name: Legacy, all languages
+languages: all

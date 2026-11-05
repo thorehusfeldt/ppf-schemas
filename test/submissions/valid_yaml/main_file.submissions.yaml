@@ -1,0 +1,35 @@
+# A multi-file Java submission accepted/dir/ = {Solver.java, Helper.java}.
+# Without main_file, the main file would be Helper.java (lexicographically smallest).
+accepted/dir:
+  main_file: Solver.java
+---
+# A multi-file Python submission; main_file names a file, not a module.
+accepted/py_multi:
+  language: python3
+  main_file: solve.py
+---
+# The main file may sit in a subdirectory of the submission.
+accepted/nested:
+  main_file: app/Main.java
+---
+# Kotlin: name the file; the toolchain derives the class (FooKt).
+accepted/kotlin:
+  main_file: Foo.kt
+---
+# main_file combines with the other keys and with per-test-group expectations.
+wrong_answer/greedy:
+  language: java
+  main_file: Greedy.java
+  authors: Ada Lovelace <ada@example.com>
+  required: [WA]
+  sample:
+    permitted: [AC]
+---
+# A glob gives the same main file to every matching submission.
+accepted/*:
+  main_file: Solver.java
+---
+# Accepted by the schema, although the spec requires main_file to name a submitted file:
+# a class name looks like a file name.
+accepted/dir:
+  main_file: Solver

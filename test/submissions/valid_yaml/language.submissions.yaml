@@ -1,0 +1,6 @@
+# language is a code from the languages table.
+accepted/solution.py:
+  language: python3
+---
+accepted/Solution.java:
+  language: java

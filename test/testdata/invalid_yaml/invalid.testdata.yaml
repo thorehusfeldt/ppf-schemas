@@ -15,3 +15,13 @@ range: "0"
 ---
 # Unknown keys are rejected.
 foo: bar
+---
+# input_validator_flags is a string, not a map.
+input_validator_flags:
+  name: my_validator
+  flags: --strict
+---
+# output_validator_flags is a string, not a map.
+output_validator_flags:
+  name: my_validator
+  flags: --tolerance 1e-6

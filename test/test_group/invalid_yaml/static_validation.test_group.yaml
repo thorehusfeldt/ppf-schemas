@@ -1,0 +1,27 @@
+# No integer static_validation_score in a group with pass-fail aggregation.
+score_aggregation: pass-fail
+static_validation_score: 10
+---
+# No static_validation_score pass-fail in a group with sum aggregation.
+score_aggregation: sum
+static_validation_score: pass-fail
+---
+# No static_validation_score pass-fail in a group with min aggregation.
+score_aggregation: min
+static_validation_score: pass-fail
+---
+# score_mode implies sum or min aggregation, so static_validation_score cannot be pass-fail.
+score_mode: relative
+static_validation_score: pass-fail
+---
+# An unbounded maximum score implies sum or min aggregation, so not pass-fail either.
+max_score: unbounded
+static_validation_score: pass-fail
+---
+# static_validation_score is a non-negative integer or pass-fail.
+static_validation_score: -1
+---
+static_validation_score: Pass-Fail
+---
+# static_validator_args requires static_validation_score.
+static_validator_args: [--strict]

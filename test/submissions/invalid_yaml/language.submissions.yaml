@@ -1,0 +1,11 @@
+# language must be a code from the languages table.
+accepted/solution.qya:
+  language: quenya
+---
+# Codes are lowercase.
+accepted/solution.py:
+  language: Python3
+---
+# python is not a code; the table has python2 and python3.
+accepted/solution.py:
+  language: python

@@ -1,0 +1,17 @@
+# file-output is incompatible with interactive.
+name: Interactive file output
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ad3
+type: [interactive, file-output]
+---
+# file-output is incompatible with submit-answer.
+name: Submit-answer file output
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ad4
+type: [file-output, submit-answer]
+---
+# allow_file_writing was removed; use type file-output instead.
+name: Writes files
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ad5
+allow_file_writing: true

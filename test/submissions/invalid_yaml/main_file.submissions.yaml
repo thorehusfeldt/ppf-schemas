@@ -1,0 +1,32 @@
+# entrypoint was renamed to main_file.
+accepted/dir:
+  entrypoint: Solver
+---
+# main_file is relative to the submission's directory, not rooted at the package.
+accepted/dir:
+  main_file: /submissions/accepted/dir/Solver.java
+---
+# main_file cannot leave the submission's directory.
+accepted/dir:
+  main_file: ../Helper.java
+---
+# main_file names one file, not a list.
+accepted/dir:
+  main_file: [Solver.java, Helper.java]
+---
+# main_file cannot be empty.
+accepted/dir:
+  main_file: ""
+---
+# Empty path components are not allowed.
+accepted/nested:
+  main_file: app//Main.java
+---
+# File names cannot contain spaces.
+accepted/dir:
+  main_file: My Solver.java
+---
+# main_file belongs to the submission, not to a test group's expectations.
+accepted/dir:
+  secret:
+    main_file: Solver.java

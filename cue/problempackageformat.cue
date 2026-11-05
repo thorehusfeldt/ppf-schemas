@@ -20,7 +20,7 @@ name_pattern: "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 // the other for contexts where only one is legal.
 #path: =~"^/?(\(name_pattern)/)*\(name_pattern)$"
 
-// A path relative to the package root, such as "data/secret/huge" or "submissions/accepted/x.cpp".
+// A path without a leading /.
 #relative_path: #path & !~"^/"
 
 // A path rooted at the package root, such as "/data/secret/huge" or "/submissions/accepted/x.cpp".
@@ -37,7 +37,6 @@ name_pattern: "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 // Test data configuration
 #test_case_or_group_configuration: {
 	args?: [...string]
-	answer_validator_args?: [...string] | {[string]: [...string]}
 	input_validator_args?: [...string] | {[string]: [...string]}
 	output_validator_args?: [...string]
 	input_visualizer_args?: [...string]
@@ -51,27 +50,48 @@ name_pattern: "[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,254}"
 	description?: string
 }
 
-// Configuration for test_group.yaml (2025-09 format only -- legacy uses testdata.yaml,
-// #testdata_configuration, with an unrelated set of keys).
+// Configuration for test_group.yaml
 #test_group_configuration: {
 	#test_case_or_group_configuration
-	max_score?:               int & >=0 | "unbounded"
-	score_aggregation?:       "pass-fail" | "sum" | "min"
+	#all_or_nothing_scoring | *#numerical_scoring
 	static_validation_score?: int & >=0 | "pass-fail"
 	if static_validation_score != _|_ {
 		static_validator_args?: [...string]
 	}
 	require_pass?: "sample" | #test_data_group | [...("sample" | #test_data_group)]
+}
 
+// How secret or a test data group is scored.
+// All or nothing (score_aggregation: pass-fail).
+#all_or_nothing_scoring: {
+	score_aggregation:        "pass-fail"
+	max_score?:               int & >=0
+	static_validation_score?: "pass-fail"
+}
+
+// In numerical scoring, test case scores are summed or minimized,
+// either up to a fixed maximum or not.
+#numerical_scoring: {
+	score_aggregation?: "sum" | "min"
+	*#bounded_score | #unbounded_score
+	static_validation_score?: int & >=0
+}
+
+// A fixed maximum score.
+#bounded_score: {
+	max_score?:  int & >=0
+	score_mode?: "none" | "absolute" | "relative"
+}
+
+// No maximum score; validators must report absolute scores.
+#unbounded_score: {
+	max_score:   "unbounded"
+	score_mode?: "absolute"
 }
 
 let inf_or_number = "([-+]?[0-9]+(\\.[0-9]+)?|-inf|\\+inf|inf)"
 
-// Configuration for testdata.yaml (legacy format only -- 2025-09 uses test_group.yaml,
-// #test_group_configuration, with an unrelated set of keys, plus a separate per-testcase
-// #test_case_configuration file that legacy has no equivalent of). May be placed in any test
-// data group; properties are inherited transitively by descendant groups that don't override
-// them.
+// Configuration for testdata.yaml (legacy format only)
 #testdata_configuration: {
 	// How judging proceeds after a non-Accept judgement on an individual test case or subgroup.
 	// "break": proceed immediately to grading. "continue": keep judging the rest of the group.
@@ -82,19 +102,11 @@ let inf_or_number = "([-+]?[0-9]+(\\.[0-9]+)?|-inf|\\+inf|inf)"
 	// Arguments passed to the grader for this test data group.
 	grader_flags?: *"" | string
 
-	// Arguments passed to the input validator for this test data group. If a string, those are
-	// the arguments passed to each input validator. If a map, name is the input validator to use
-	// and flags are its arguments. (The spec's prose also describes this map as if it could be
-	// dynamically keyed by validator name, with "validators not present in the map run without
-	// arguments" -- that's inconsistent with its own type column, "map with the keys name and
-	// flags", which is what's encoded here.)
-	input_validator_flags?: *"" | string | {name?: string, flags?: string}
+	// Arguments passed to each input validator for this test data group.
+	input_validator_flags?: *"" | string
 
-	// Arguments passed to the output validator for this test data group. If a string, this is
-	// the name of the output validator to use (not its arguments -- asymmetric with
-	// input_validator_flags, but that's what the spec states). If a map, name is the output
-	// validator to use and flags are its arguments.
-	output_validator_flags?: *"" | string | {name?: string, flags?: string}
+	// Arguments passed to the output validator for this test data group.
+	output_validator_flags?: *"" | string
 
 	// Default score for accepted input files. Only for scoring problems.
 	accept_score?: *1 | number

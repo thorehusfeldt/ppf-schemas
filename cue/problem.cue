@@ -10,9 +10,10 @@ import uuidpkg "uuid"
 // "pass-fail" (the default) - accepted or rejected with a specific verdict, incompatible with scoring;
 // "scoring" - submissions receive a non-negative numeric score, incompatible with pass-fail;
 // "multi-pass" - the submission is run multiple times against generated inputs, incompatible with submit-answer;
-// "interactive" - the output validator runs interactively with the submission, incompatible with submit-answer;
-// "submit-answer" - the submission contains answers rather than source code, incompatible with multi-pass and interactive.
-#Type: "pass-fail" | "scoring" | "multi-pass" | "interactive" | "submit-answer"
+// "interactive" - the output validator runs interactively with the submission, incompatible with file-output and submit-answer;
+// "file-output" - the files written by a submission are part of its output, incompatible with interactive and submit-answer;
+// "submit-answer" - the submission contains answers rather than source code, incompatible with multi-pass, interactive, and file-output.
+#Type: "pass-fail" | "scoring" | "multi-pass" | "interactive" | "file-output" | "submit-answer"
 
 // A single source of this problem, given either as a string with just the name, or as a map
 // with the mandatory name and the optional url of the event's webpage.
@@ -95,7 +96,9 @@ import uuidpkg "uuid"
 		_policy: true &
 			!(list.Contains(type, "scoring") && list.Contains(type, "pass-fail")) &&
 			!(list.Contains(type, "multi-pass") && list.Contains(type, "submit-answer")) &&
-			!(list.Contains(type, "interactive") && list.Contains(type, "submit-answer"))
+			!(list.Contains(type, "interactive") && list.Contains(type, "submit-answer")) &&
+			!(list.Contains(type, "interactive") && list.Contains(type, "file-output")) &&
+			!(list.Contains(type, "file-output") && list.Contains(type, "submit-answer"))
 	}
 
 	// The version of this problem, as it undergoes (slight) changes possibly during development or deployment.
@@ -161,19 +164,12 @@ import uuidpkg "uuid"
 	// If only a date is given, the time defaults to the start of that day in UTC.
 	embargo_until?: time.Format("2006-01-02") | time.Format("2006-01-02T15:04:05Z")
 
-	// The programming languages that may be used to solve this problem, restricted to the values
-	// from the languages table, or "all" (the default) to allow any supported language.
+	// The programming languages that may be used to solve this problem.
 	languages?: *"all" | [#ProgrammingLanguage, ...#ProgrammingLanguage]
 
-	// Whether submissions may create, edit, and delete files in their working directory.
-	// If false (the default), submissions may only read files.
-	allow_file_writing?: *false | true
-
-	// Named constant values, substituted via {{name}} (or {{name.variant}} for a variant) tokens
-	// in statements, validators, included files, and example submissions -- but not in test data
-	// or in problem.yaml itself. A constant is either a scalar (int, float, or string), equivalent
-	// to {value: scalar}, or a map with the mandatory value and optional named variants giving
-	// alternative representations, such as {value: 5000000, tex: "5,000,000"}.
+	// Named constants. A constant is either a scalar (int, float, or string), equivalent to
+	// {value: scalar}, or a map with the mandatory value and optional string variants, such as
+	// {value: 5000000, tex: "5,000,000"}.
 	constants?: [=~"^[a-zA-Z_][a-zA-Z0-9_]*$"]: int | float | string | {
 		value!:               int | float | string
 		[string & !="value"]: string
@@ -249,4 +245,7 @@ import uuidpkg "uuid"
 	// A space-separated list of keywords describing this problem; keywords themselves must not
 	// contain spaces. These are not standardized and are only for informational purposes.
 	keywords?: string
+
+	// The programming languages that may be used to solve this problem.
+	languages?: *"all" | [#ProgrammingLanguage, ...#ProgrammingLanguage]
 }

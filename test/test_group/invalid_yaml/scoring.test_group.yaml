@@ -1,0 +1,67 @@
+# null is not the value none.
+score_mode:
+---
+score_mode: ~
+---
+score_mode: null
+---
+# Values are case-sensitive.
+score_mode: None
+---
+score_mode: NONE
+---
+# false is not none.
+score_mode: false
+---
+# The empty string is not none.
+score_mode: ""
+---
+# score_mode is a single value, not a list.
+score_mode: [none]
+---
+# Values of score_aggregation are case-sensitive and spelled with a hyphen.
+score_aggregation: Sum
+---
+score_aggregation: pass_fail
+---
+score_aggregation: passfail
+---
+# null is not a value of score_aggregation.
+score_aggregation:
+---
+# All or nothing: test cases receive no score of their own, so there is no score_mode.
+score_aggregation: pass-fail
+score_mode: none
+---
+score_aggregation: pass-fail
+score_mode: absolute
+---
+score_aggregation: pass-fail
+score_mode:
+---
+# All or nothing requires a bounded maximum score.
+score_aggregation: pass-fail
+max_score: unbounded
+---
+# An unbounded maximum score requires absolute score_mode.
+max_score: unbounded
+score_mode: relative
+---
+max_score: unbounded
+score_mode: none
+---
+score_aggregation: sum
+max_score: unbounded
+score_mode: relative
+---
+# max_score is a non-negative integer or unbounded.
+max_score: -1
+---
+max_score:
+---
+# A misspelled key is rejected, also next to a valid score_mode.
+score_mode: none
+score_moode: none
+---
+# answer_validator_args is not part of the specification.
+answer_validator_args: [--strict]

@@ -1,0 +1,27 @@
+# An integer static_validation_score in a group with sum aggregation.
+score_aggregation: sum
+static_validation_score: 10
+---
+# An integer static_validation_score in a group with min aggregation.
+score_aggregation: min
+static_validation_score: 0
+---
+# static_validation_score pass-fail in a group with pass-fail aggregation.
+score_aggregation: pass-fail
+static_validation_score: pass-fail
+---
+# Without score_aggregation, pass-fail is accepted: it is allowed in pass-fail problems and in
+# groups with pass-fail aggregation, which a schema cannot tell apart from other files.
+static_validation_score: pass-fail
+---
+# Without score_aggregation, an integer is accepted too (for example in secret, which sums).
+static_validation_score: 5
+---
+# static_validator_args next to static_validation_score.
+score_aggregation: sum
+static_validation_score: 5
+static_validator_args: [--strict]
+---
+# An integer static_validation_score with an unbounded maximum score.
+max_score: unbounded
+static_validation_score: 5

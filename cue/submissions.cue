@@ -16,11 +16,11 @@ let glob_path = =~"^(\(component_re)/)*\(component_re)$" & !~"\\*\\*"
 }
 
 #submission: {
-	// As determined by file endings given in the language list, if not given.
-	language?: string
+	language?: #ProgrammingLanguage
 
-	// As specified in the language list, if not given.
-	entrypoint?: string
+	// Path of the main file, relative to the submission's directory, such as "solve.py" or
+	// "app/Main.java".
+	main_file?: #relative_path
 
 	// The author(s) of this submission.
 	authors?: #Persons
@@ -46,7 +46,6 @@ let glob_path = =~"^(\(component_re)/)*\(component_re)$" & !~"\\*\\*"
 	// Must appear as a substring in at least one judgemessage.txt.
 	judge_message?: *"" | string
 
-	// Opt this (set of) submission(s) out of (false) or into (lower/upper) determining the time
-	// limit. lower is equivalent to permitted: [AC, WA, RTE]; upper is equivalent to required: [TLE].
-	use_for_time_limit?: false | "lower" | "upper"
+	// Use this submission to lower or upper bound the time limit.
+	use_for_time_limit?: "lower" | "upper"
 }

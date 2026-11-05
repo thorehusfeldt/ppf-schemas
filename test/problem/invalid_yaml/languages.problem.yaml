@@ -9,3 +9,13 @@ name: Empty languages list
 problem_format_version: 2025-09
 uuid: 12345678-1234-1234-1234-123456789aca
 languages: []
+---
+# Legacy problems also only allow languages from the languages table.
+problem_format_version: legacy
+name: Legacy unknown language
+languages: [cpp, esperanto]
+---
+# Legacy languages must not be an empty list either.
+problem_format_version: legacy
+name: Legacy empty languages list
+languages: []

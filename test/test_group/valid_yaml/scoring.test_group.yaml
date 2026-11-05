@@ -1,0 +1,46 @@
+# score_mode takes one of three values.
+score_mode: none
+---
+score_mode: absolute
+---
+score_mode: relative
+---
+# A quoted "none" is the same string as an unquoted one.
+score_mode: "none"
+---
+# score_mode with sum aggregation.
+score_aggregation: sum
+score_mode: relative
+---
+# score_mode with min aggregation.
+score_aggregation: min
+score_mode: none
+---
+# score_mode with a bounded maximum score.
+max_score: 30
+score_mode: relative
+---
+# Unbounded maximum score with absolute score_mode.
+max_score: unbounded
+score_mode: absolute
+---
+score_aggregation: min
+max_score: unbounded
+score_mode: absolute
+---
+# Unbounded maximum score alone: score_mode defaults to absolute.
+max_score: unbounded
+---
+score_aggregation: sum
+max_score: unbounded
+---
+# score_mode without aggregation is accepted: whether it is allowed depends on the default
+# aggregation (sum in secret, pass-fail in test data groups), which a schema cannot see.
+score_mode: relative
+---
+# All or nothing with a bounded maximum score.
+score_aggregation: pass-fail
+max_score: 20
+---
+# An empty file is fine.
+{}

@@ -1,0 +1,13 @@
+# Use these submissions to lower bound the time limit.
+accepted:
+  use_for_time_limit: lower
+---
+# Use these submissions to upper bound the time limit.
+time_limit_exceeded:
+  use_for_time_limit: upper
+---
+# use_for_time_limit can apply to a subset of test cases.
+too_slow:
+  required: [TLE]
+  secret/huge:
+    use_for_time_limit: upper

@@ -1,0 +1,11 @@
+# file-output: the files written by a submission are part of its output.
+name: File output
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ad1
+type: file-output
+---
+# file-output combines with scoring and multi-pass.
+name: Scoring multi-pass file output
+problem_format_version: 2025-09
+uuid: 12345678-1234-1234-1234-123456789ad2
+type: [scoring, multi-pass, file-output]

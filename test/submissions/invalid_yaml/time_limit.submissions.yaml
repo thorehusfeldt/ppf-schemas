@@ -1,0 +1,11 @@
+# use_for_time_limit is opt-in; false is not a value (leave the key out instead).
+accepted:
+  use_for_time_limit: false
+---
+# true is not a value either; say lower or upper.
+accepted:
+  use_for_time_limit: true
+---
+# Values are case-sensitive.
+accepted:
+  use_for_time_limit: Lower
